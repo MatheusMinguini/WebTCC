@@ -81,16 +81,47 @@
 							<form class="form-horizontal" action="cadastro_usuario.php"
 								method="post">
 								<div class="form-group">
+									<div class="row col-md-12">
+
+										<input type="hidden" name="login_usuario" value="<?= $_SESSION['idSession'] ?>" />
+
+										<div class="col-md-4">
+											<label> Nome <span class="obrigatorio">*</span></label><input required type="text" name="nome"
+												class="form-control" placeholder="Nome" maxlength="25">
+										</div>
+										<div class="col-md-4">
+											<label> Sobrenome <span class="obrigatorio">*</span></label><input required type="text" name="sobrenome"
+												class="form-control" placeholder="Sobrenome" maxlength="25">
+										</div>
+										<div class="col-md-4">
+											<label> Login no sistema <span class="obrigatorio">*</span></label><input required type="text" name="login"
+												class="form-control" placeholder="Login" maxlength="25">
+											<br/>
+										</div>
+
+									</div>
+
+								<div class="row col-md-12">
 									<div class="col-md-4">
-										<label> Nome <span class="obrigatorio">*</span></label><input required type="text" name="nome"
+										<label> Email (Será usado para recuperação de senha) <span class="obrigatorio">*</span></label><input required type="text" name="email"
 											class="form-control" placeholder="Nome" maxlength="25">
 									</div>
 									<div class="col-md-4">
 										<label>Senha <span class="obrigatorio">*</span></label><input required type="password" name="senha"
 											class="form-control" placeholder="Senha" maxlength="25">
+											<br>
 									</div>
 									<div class="col-md-4">
-										<label>Confirma senha <span class="obrigatorio">*</span></label><input required type="password" name="confsenha" class="form-control" placeholder="Confirma a senha" maxlength="25">
+										<label>Confirmação de senha <span class="obrigatorio">*</span></label><input required type="password" name="confsenha" class="form-control" placeholder="Confirma a senha" maxlength="25">
+									</div>
+								</div>
+									<div class="col-md-4">
+										<label>Perfil <span class="obrigatorio">*</span></label>
+										<select name="perfil" class="form-control">
+											<option value=""> Selecione </option>
+											<option value="1"> Administrativo </option>
+											<option value="2"> Operador </option>
+										</select>
 									</div>
 								</div>
 								<br>

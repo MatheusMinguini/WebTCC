@@ -13,8 +13,6 @@ $resultado = mysql_fetch_object($dados);
 
 $codigo = $resultado->codigo;
 $descricao = $resultado->descricao;
-$numero_parcelas = $resultado->numero_parcelas;
-$numero_dias = $resultado->numero_dias;
 $acrescimo = $resultado->acrescimo;
 ?>
 <!DOCTYPE html>
@@ -98,16 +96,7 @@ $acrescimo = $resultado->acrescimo;
 										<label>Descrição <span class="obrigatorio">*</span></label>
 										<input required type="text" name="descricao" class="form-control" placeholder="descricao" maxlength="20" value="<?=$descricao?>">
 									</div>
-									<div class="col-md-4">
-										<label>Número de parcelas <span class="obrigatorio">*</span></label>
-										<input  type="number" name="numero_parcelas" class="form-control" placeholder="Número de parcelas" maxlength="11" value="<?=$numero_parcelas?>">
-									</div>
-									<div class="col-md-4">
-										<label>Número de dias <span class="obrigatorio">*</span></label>
-										<input required id="cpf" type="number" name="numero_dias" class="form-control" placeholder="Número de dias" maxlength="11" value="<?=$numero_dias?>">
-										</br>
-									</div>
-
+									
 									<div class="col-md-4">
 										<label>Acréscimo <span class="obrigatorio">*</span></label>
 										<input required type="number" name="acrescimo" class="form-control" placeholder="Acréscimo" maxlength="15" value="<?=$acrescimo?>">

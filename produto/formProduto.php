@@ -8,6 +8,7 @@ include '../conexao.php';
 $query = mysql_query("SELECT codigo, nome FROM grupo ORDER BY nome");
 $query1 = mysql_query("SELECT codigo, nome FROM fornecedor ORDER BY nome");
 $query2 = mysql_query("SELECT codigo, marca FROM marca ORDER BY marca");
+$query3 = mysql_query("SELECT codigo, modelo FROM modelo ORDER BY modelo");
 ?>
 
 
@@ -134,6 +135,18 @@ $query2 = mysql_query("SELECT codigo, marca FROM marca ORDER BY marca");
 									</div>
 
 									<div class=" col-md-4">
+										<label class="control-label">Selecione o Modelo</label>
+										 <select class="form-control" name="modelo">
+												<option value="">Escolha o modelo</option>
+													<?php while($modelo = mysql_fetch_array($query3)) { ?>
+												<option value="<?=$modelo['codigo'] ?>">
+													<?=$modelo['modelo'] ?>
+												</option>
+													<?php } ?>
+										</select> <br>
+									</div>
+
+									<div class=" col-md-4">
 										<label class="control-label">Selecione o fornecedor</label>
 										 <select class="form-control" name="fornecedor">
 												<option value="">Escolha o fornecedor</option>
@@ -152,12 +165,8 @@ $query2 = mysql_query("SELECT codigo, marca FROM marca ORDER BY marca");
 									</div>
 
 									<div class="col-md-4">
-										<label class="control-label">Tamanho do produto</label> <select
-											class="form-control col-md-4" name="tamanho">
-											<option value="p">P</option>
-											<option value="m">M</option>
-											<option value="g">G</option>
-										</select> <br>
+										<label class="control-label">Tamanho do produto</label>
+										<input  type="text" name="tamanho" class="form-control" placeholder="tamanho">
 									</div>
 					</div>
 
@@ -271,6 +280,10 @@ $query2 = mysql_query("SELECT codigo, marca FROM marca ORDER BY marca");
 
 
 	<script>
+
+<!-- Trazer a data de hoje na data da compra -->
+
+    document.querySelector('.data_entrada').valueAsDate = new Date();
 
 	window.onload = function(){
 		document.getElementById('codigo_barra').focus();

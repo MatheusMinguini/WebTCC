@@ -9,9 +9,9 @@
 header('Content-Type: text/html; charset=utf-8');
 $conn = @mysql_connect('127.0.0.1','root','');
 if (!$conn) {
-    die('NÃ£o foi possÃ­vel Conectar: ' . mysql_error());
+    die('Não foi possí­vel Conectar: ' . mysql_error());
 }
-mysql_select_db('maramodas', $conn);
+mysql_select_db('tcc', $conn);
 
 mysql_query("SET NAMES 'utf8'");
 mysql_query('SET character_set_connection=utf8');

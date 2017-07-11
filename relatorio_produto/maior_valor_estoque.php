@@ -93,14 +93,10 @@
 										</thead>
 
 										<?php
-											$data_inicial = $_POST['data_inicial'];
-											$data_final = $_POST['data_final'];
                                 @include("../conexao.php");
-                                @$buscar = $_REQUEST['buscar'];
                                 $sql = mysql_query(
 																"SELECT codigo_barra, nome, preco_custo, preco_venda, MAX(preco_custo) FROM produto
-																	WHERE data_entrada between '$data_inicial' and '$data_final'
-																	AND vendido = 'n'
+																	WHERE vendido = 'n'
 																	GROUP BY codigo_barra, nome
 																	ORDER BY preco_custo DESC; "
 																);
@@ -144,9 +140,8 @@
 												<input type="submit" name="export_excel" class="btn btn-success" value="Exportar para o Excel">
 											</form>
 										</div>
+							  	</div>
 
-
-								</div>
 							</div>
 						</div>
 					<div class="row text-center"></div>

@@ -121,7 +121,7 @@
                               <div class="panel-heading" role="tab" id="headingThree">
                               <h4 class="panel-title">
                                   <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    RELATÓRIO DOs PRODUTOS ORDENADOS POR MAIOR VALOR DE CUSTO NO ESTOQUE
+                                    RELATÓRIO DOS PRODUTOS ORDENADOS POR MAIOR VALOR DE CUSTO NO ESTOQUE
                                   </a>
                                 </h4>
                               </div>
@@ -129,20 +129,9 @@
                                 <div class="panel-body">
                                   <form class="form-horizontal" action="maior_valor_estoque.php" method="post">
                                     <div class="row">
-                                      <div class="col-md-3">
-
-                                      </div>
-                                        <div class="col-md-3">
-                                          <label>Data Inicial</label>
-                                            <input class="form-control data_inicial" type="date" name="data_inicial">
-                                        </div>
-                                        <div class="col-md-3">
-                                          <label>Data Final</label>
-                                            <input class="form-control data_final" type="date" name="data_final">
-                                        </div>
-                                        <div class="col-md-2">
+                                        <div class="form-actions center pull-center">
                                           <br>
-                                            <button class="btn btn-success btn-sm" type="submmit" name="button" >Gerar</button>
+                                            <button class="btn btn-success btn-lg" type="submmit" name="button" >Gerar</button>
                                         </div>
                                     </div>
                                   </form>
@@ -163,20 +152,9 @@
                                 <div class="panel-body">
                                   <form class="form-horizontal" action="menor_valor_estoque.php" method="post">
                                     <div class="row">
-                                      <div class="col-md-3">
-
-                                      </div>
-                                        <div class="col-md-3">
-                                          <label>Data Inicial</label>
-                                            <input class="form-control data_inicial" type="date" name="data_inicial">
-                                        </div>
-                                        <div class="col-md-3">
-                                          <label>Data Final</label>
-                                            <input class="form-control data_final" type="date" name="data_final">
-                                        </div>
-                                        <div class="col-md-2">
+                                        <div class="form-actions center pull-center">
                                           <br>
-                                            <button class="btn btn-success btn-sm" type="submmit" name="button" >Gerar</button>
+                                            <button class="btn btn-success btn-lg" type="submmit" name="button" >Gerar</button>
                                         </div>
                                     </div>
                                   </form>

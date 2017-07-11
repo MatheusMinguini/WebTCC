@@ -2,9 +2,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-5">
-                <span > <i class='glyphicon glyphicon-copyright-mark'></i> Minguini's - Todos os direitos reservados - versão 1.0.0 </span>
+                <span > <i class='glyphicon glyphicon-copyright-mark'></i> Minguini's - Todos os direitos reservados - versão 2.1.3 </span>
                 <br>
-                <span > Desenvolvido por Matheus Simões Minguini e Vinicius Guellis de Carvalho - 2016 </span>
+                <span > Desenvolvido por Matheus Simões Minguini - 2017 </span>
             </div>
             <div class="col-md-4">
                 <ul class="list-inline social-buttons">

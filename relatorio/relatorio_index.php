@@ -68,9 +68,9 @@
 
 
               <div class="row">
-                  <div class="col-lg-12 text-center">
+                  <div class="col-sm-12 text-center">
                     <form class="control">
-                        <div class="input-">
+                        <div class="input">
 
                         </div>
                     </form>
@@ -78,7 +78,7 @@
                         <div id="panel-heading" class="panel-heading">
                           <h2 id="clientes_titulo" class="panel-title"><i class = "fa fa-list-alt"></i> Relatórios</h2>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body center-block">
                             <div class="row">
                               <div class="col-md-4">
                                   <a class="btn btn-info btn-lg" href="../relatorio_produto/relatorio_produto_index.php" type="button" name="button" style="background-color: black; color: white;"><i class="fa fa-tags"></i> Produtos</a>
@@ -86,9 +86,11 @@
                               <div class="col-md-4">
                                   <a class="btn btn-info btn-lg" href="../relatorio_venda/relatorio_venda_index.php" type="button" name="button" style="background-color: black; color: white;"><i class="fa fa-shopping-cart"></i> Vendas</a>
                               </div>
+
                               <div class="col-md-4">
-                                  <a class="btn btn-info btn-lg" href="" type="button" name="button" style="background-color: black; color: white;"><i class="glyphicon glyphicon-credit-card"></i> Contas </a>
+                                  <a class="btn btn-info btn-lg" href="../relatorio_cliente/relatorio_cliente_index.php" type="button" name="button" style="background-color: black; color: white;"><i class="fa fa-user"></i> Histórico Cliente</a>
                               </div>
+
                             </div>
 
                         </div>

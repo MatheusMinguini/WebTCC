@@ -100,44 +100,6 @@ $query = mysql_query("SELECT codigo, nome FROM fornecedor ORDER BY nome");
 										<input required id="cnpj" type="text" name="cnpj" class="form-control" placeholder="CNPJ" maxlength="15">
 									</div>
 									<div class="col-md-4">
-										<label>Cidade <span class="obrigatorio">*</span></label>
-										<input required type="text" name="cidade" class="form-control" placeholder="Cidade" maxlength="25"> <br>
-									</div>
-									<div class="col-md-4">
-										<label>Estado <span class="obrigatorio">*</span></label>
-										<select class="form-control" name="estado">
-														<option value="">Selecione</option>
-													<option>----------------------------------------------------</option>
-														<option value="AC">Acre</option>
-														<option value="AL">Alagoas</option>
-														<option value="AP">Amapá</option>
-														<option value="AM">Amazonas</option>
-														<option value="BA">Bahia</option>
-														<option value="CE">Ceará</option>
-														<option value="DF">Distrito Federal</option>
-														<option value="ES">Espirito Santo</option>
-														<option value="GO">Goiás</option>
-														<option value="MA">Maranhão</option>
-														<option value="MS">Mato Grosso do Sul</option>
-														<option value="MT">Mato Grosso</option>
-														<option value="MG">Minas Gerais</option>
-														<option value="PA">Pará</option>
-														<option value="PB">Paraíba</option>
-														<option value="PR">Paraná</option>
-														<option value="PE">Pernambuco</option>
-														<option value="PI">Piauí</option>
-														<option value="RJ">Rio de Janeiro</option>
-														<option value="RN">Rio Grande do Norte</option>
-														<option value="RS">Rio Grande do Sul</option>
-														<option value="RO">Rondônia</option>
-														<option value="RR">Roraima</option>
-														<option value="SC">Santa Catarina</option>
-														<option value="SP">São Paulo</option>
-														<option value="SE">Sergipe</option>
-														<option value="TO">Tocantins</option>
-											</select>
-									</div>
-									<div class="col-md-4">
 										<label>E-mail</label>
 										<input id="" type="text"	name="email" class="form-control" placeholder="E-mail" maxlength="20">
 									</div>
@@ -152,8 +114,81 @@ $query = mysql_query("SELECT codigo, nome FROM fornecedor ORDER BY nome");
 									</div>
 								</div>
 								</fieldset>
+
+
+						<div class="page-header">
+							<h4 id="cabecalho-form-cliente" align="left">Localização</h4>
 						</div>
 
+						<div class="row pull-left">
+							<p><h6>Digite o <span class="obrigatorio">CEP</span>, buscaremos o endereço baseado nele!</h6></p>
+						</div>
+
+						<div class="row col-md-12">
+							<div class="col-md-4">
+								<label>CEP </label>
+								<input required id="cep" type="text" name="cep" class="form-control cep" placeholder="CEP">
+								<br>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-4">
+								<label> Logradouro </label><input required type="text" name="logradouro"
+									class="form-control logradouro" placeholder="Rua" maxlength="30">
+							</div>
+							<div class="col-md-4">
+								<label>Bairro </label><input required type="text" name="bairro"
+									class="form-control bairro" placeholder="Bairro" maxlength="30">
+							</div>
+							<div class="col-md-4">
+								<label>Número </label><input required type="text" name="numero"
+									class="form-control numero" placeholder="Número" maxlength="10">
+								</br>
+							</div>
+							<div class="col-md-4">
+								<label>Complemento </label><input type="text" name="complemento"
+									class="form-control complemento" placeholder="Número" maxlength="10">
+								</br>
+							</div>
+							<div class="col-md-4">
+								<label>Cidade </label><input required type="text" name="cidade"
+									class="form-control cidade" placeholder="Cidade" maxlength="25">
+							</div>
+							<div class="col-md-4">
+								<label>Estado </label>
+								<select class="form-control estado" name="estado">
+											<option value="">Selecione</option>
+											<option value="AC">Acre</option>
+											<option value="AL">Alagoas</option>
+											<option value="AP">Amapá</option>
+											<option value="AM">Amazonas</option>
+											<option value="BA">Bahia</option>
+											<option value="CE">Ceará</option>
+											<option value="DF">Distrito Federal</option>
+											<option value="ES">Espirito Santo</option>
+											<option value="GO">Goiás</option>
+											<option value="MA">Maranhão</option>
+											<option value="MS">Mato Grosso do Sul</option>
+											<option value="MT">Mato Grosso</option>
+											<option value="MG">Minas Gerais</option>
+											<option value="PA">Pará</option>
+											<option value="PB">Paraíba</option>
+											<option value="PR">Paraná</option>
+											<option value="PE">Pernambuco</option>
+											<option value="PI">Piauí</option>
+											<option value="RJ">Rio de Janeiro</option>
+											<option value="RN">Rio Grande do Norte</option>
+											<option value="RS">Rio Grande do Sul</option>
+											<option value="RO">Rondônia</option>
+											<option value="RR">Roraima</option>
+											<option value="SC">Santa Catarina</option>
+											<option value="SP">São Paulo</option>
+											<option value="SE">Sergipe</option>
+											<option value="TO">Tocantins</option>
+								</select>
+								<br>
+							</div>
+						</div>
 
 						<div class="row">
 							<div clas="col-md-4">
@@ -163,18 +198,19 @@ $query = mysql_query("SELECT codigo, nome FROM fornecedor ORDER BY nome");
 								<br>
 							</div>
 							<div class="row col-xs-3 pull-left">
-								<p><h6>Os campos com o sinal '*' são obrigatórios</h6></p>
+								<p><h6>Os campos com o sinal <span class="obrigatorio">'*'</span> são obrigatórios</h6></p>
 							</div>
 							<br>
 							</form>
-
-						</div>
 					</div>
+				 </div>
 				</div>
+			 </div>
 			</div>
-			<div class="row text-center"></div>
-		</div>
-	</section>
+		 </div>
+		<div class="row text-center"></div>
+	</div>
+</section>
 
 	<?php
       include ("../footer.php")
@@ -202,6 +238,30 @@ $query = mysql_query("SELECT codigo, nome FROM fornecedor ORDER BY nome");
 	<!-- Theme JavaScript -->
 	<script src="../js/agency.min.js"></script>
 
+	<script>
+	    $(".cep").on('blur', function(){
+	      var cep = $(this).val();
+	      var novoCEP = cep.replace(/[\.-]/g, "");
+	      $.ajax({
+	        type: "GET",
+	        url : "//viacep.com.br/ws/" + novoCEP + "/json/",
+	        dataType : "json",
+	        success : function(data){
+	          console.log(data);
+	          $(".logradouro").val(data.logradouro);
+	          $(".bairro").val(data.bairro);
+	          $(".numero").val(data.numero);
+	          $(".complemento").val(data.complemento);
+	          $(".cidade").val(data.localidade);
+	          $(".estado").val(data.uf);
+
+	        }, error: function(erro){
+	          alert('não foi possivel buscar o produto');
+	        }
+	      });
+	    })
+
+	</script>
 </body>
 
 </html>

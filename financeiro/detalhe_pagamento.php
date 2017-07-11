@@ -15,8 +15,6 @@ $resultado = mysql_fetch_object($dados);
 
 $codigo = $resultado->codigo;
 $descricao = $resultado->descricao;
-$numero_parcelas = $resultado->numero_parcelas;
-$numero_dias = $resultado->numero_dias;
 $acrescimo = $resultado->acrescimo;
 ?>
 
@@ -105,16 +103,6 @@ $acrescimo = $resultado->acrescimo;
 										<b>Descrição: </b><span id="dados_cliente"> <?=$descricao?></span>
 									</h5>
 								</div>
-								<div class="col-md-4">
-									<h5>
-										<b>Número de parcelas: </b><span id="dados_cliente"> <?=$numero_parcelas?></span>
-									</h5>
-								</div>
-                <div class="col-md-4">
-  								<h5>
-  									<b>Número de dias: </b><span id="dados_cliente"> <?=$numero_dias?></span>
-  								</h5>
-  							</div>
                 <div class="col-md-4">
   								<h5>
   									<b>Acrescimos: </b><span id="dados_cliente"> <?=$acrescimo?></span>

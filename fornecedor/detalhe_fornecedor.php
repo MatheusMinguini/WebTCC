@@ -16,11 +16,16 @@ $resultado = mysql_fetch_object($dados);
 $codigo = $resultado->codigo;
 $nome = $resultado->nome;
 $cnpj = $resultado->cnpj;
+$celular = $resultado->celular;
+$telefone = $resultado->telefone;
+$email= $resultado->email;
+$logradouro = $resultado->logradouro;
+$bairro = $resultado->bairro;
+$numero = $resultado->numero;
+$cep = $resultado->cep;
 $cidade = $resultado->cidade;
 $estado = $resultado->estado;
-$celular = $resultado->celular;
-$email= $resultado->email;
-$telefone = $resultado->telefone;
+$complemento = $resultado->complemento;
 
 ?>
 <!DOCTYPE html>
@@ -124,17 +129,51 @@ $telefone = $resultado->telefone;
 							<div class="page-header">
 								<h4 id="cabecalho-form-cliente" align="left">Localização</h4>
 							</div>
-              <div class="row">
-              <div class="col-md-4">
-								<h5>
-									<b>Cidade: </b><span id="dados_cliente"> <?=$cidade?></span>
-								</h5>
+							<div class="row">
+								<div class="col-md-4">
+									<h5>
+										<b>CEP: </b><span id="dados_cliente"> <?=$cep?></span>
+									</h5>
+								</div>
 							</div>
-							<div class="col-md-4">
-								<h5>
-									<b>Estado: </b><span id="dados_cliente"> <?=$estado?></span>
-								</h5>
+							<div class="row">
+								<div class="col-md-4">
+									<h5>
+										<b>Logradouro: </b><span id="dados_cliente"> <?=$logradouro?></span>
+									</h5>
+								</div>
+								<div class="col-md-4">
+									<h5>
+										<b>Bairro: </b><span id="dados_cliente"> <?=$bairro?></span>
+									</h5>
+								</div>
+								<div class="col-md-4">
+									<h5>
+										<b>Número: </b><span id="dados_cliente"> <?=$numero?></span>
+									</h5>
+								</div>
 							</div>
+							<div class="row">
+								<?php
+										if($complemento == null){
+											$complemento = "Não cadastrado";
+										}
+								 ?>
+								<div class="col-md-4">
+									<h5>
+										<b>Complemento: </b><span id="dados_cliente"> <?=$complemento ?></span>
+									</h5>
+								</div>
+								<div class="col-md-4">
+									<h5>
+										<b>cidade: </b><span id="dados_cliente"> <?=$cidade?></span>
+									</h5>
+								</div>
+								<div class="col-md-4">
+									<h5>
+										<b>Estado: </b><span id="dados_cliente"> <?=$estado?></span>
+									</h5>
+								</div>
 							</div>
 							<br>
 

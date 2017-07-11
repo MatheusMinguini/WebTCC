@@ -6,8 +6,6 @@ if(!isset($_SESSION['loginSession']) AND !isset($_SESSION['senhaSession']) ){
 }
  ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +16,22 @@ if(!isset($_SESSION['loginSession']) AND !isset($_SESSION['senhaSession']) ){
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
+
+<style>
+.modal {
+         display:    none;
+         position:   fixed;
+         z-index:    1000;
+         top:        0;
+         left:       0;
+         height:     100%;
+         width:      100%;
+         background: rgba( 255, 255, 255, .8 )
+                     url('../images/ajax-loader.gif')
+                     50% 50%
+                     no-repeat;
+ }
+ </style>
 
 <title>Mara Modas - Software</title>
 
@@ -55,7 +69,10 @@ if(!isset($_SESSION['loginSession']) AND !isset($_SESSION['senhaSession']) ){
 
 	<?php
     include ("../menu.php")
-     ?>
+  ?>
+  <div class="modal">
+  </div>
+
 	<!-- Header -->
 	<header>
 		<div class="container">
@@ -82,11 +99,16 @@ if(!isset($_SESSION['loginSession']) AND !isset($_SESSION['senhaSession']) ){
 						<div class="panel-body">
 							<form class="form-horizontal" action="cadastro_cliente.php"
 								method="post">
+                <input type="hidden" name="login_usuario" value="<?= $_SESSION['idSession'] ?>" />
 								<div class="form-group">
 									<div class="page-header">
 										<h4 id="cabecalho-form-cliente" align="left">Dados
 											Pessoais</h4>
 									</div>
+
+
+                  <input type="date" name="data_cadastro" id="data_atual"/>
+
 									<div class="col-md-4">
 										<label>Nome <span class="obrigatorio">*</span></label><input type="text" name="nome"
 											class="form-control" placeholder="Nome" maxlength="25">
@@ -118,37 +140,54 @@ if(!isset($_SESSION['loginSession']) AND !isset($_SESSION['senhaSession']) ){
 										<label>Celular</label><input id="celular" type="text"
 											name="celular" class="form-control" maxlength="15">
 									</div>
+                  <div class="col-md-4">
+                    <label>Email</label><input id="email" type="text"
+                      name="email" class="form-control" maxlength="30">
+                  </div>
 								</div>
 								</fieldset>
 								<br>
 								<div class="page-header">
-									<h4 id="cabecalho-form-cliente" align="left">Localizacão</h4>
+									<h4 id="cabecalho-form-cliente" align="left">Localização</h4>
 								</div>
+
+                <div class="row pull-left">
+                  <p><h6>Digite o <span class="obrigatorio">CEP</span>, buscaremos o endereço baseado nele!</h6></p>
+                </div>
+
+                <div class="row col-md-12">
+                  <div class="col-md-4">
+                    <label>CEP <span class="obrigatorio">*</span></label>
+                    <input required id="cep" type="text" name="cep" class="form-control cep" placeholder="CEP">
+                    <br>
+                  </div>
+                </div>
 								<div class="form-group">
 									<div class="col-md-4">
-										<label>Rua <span class="obrigatorio">*</span></label><input required type="text" name="rua"
-											class="form-control" placeholder="Rua" maxlength="30">
+										<label> Logradouro <span class="obrigatorio">*</span></label><input required type="text" name="logradouro"
+											class="form-control logradouro" placeholder="Rua" maxlength="30">
 									</div>
 									<div class="col-md-4">
 										<label>Bairro <span class="obrigatorio">*</span></label><input required type="text" name="bairro"
-											class="form-control" placeholder="Bairro" maxlength="30">
+											class="form-control bairro" placeholder="Bairro" maxlength="30">
 									</div>
 									<div class="col-md-4">
 										<label>Número <span class="obrigatorio">*</span></label><input required type="text" name="numero"
-											class="form-control" placeholder="Número" maxlength="10">
+											class="form-control numero" placeholder="Número" maxlength="10">
+										</br>
+									</div>
+                  <div class="col-md-4">
+										<label>Complemento </label><input type="text" name="complemento"
+											class="form-control complemento" placeholder="Número" maxlength="10">
 										</br>
 									</div>
 									<div class="col-md-4">
-										<label>CEP <span class="obrigatorio">*</span></label><input required id="cep" type="text"
-											name="cep" class="form-control" placeholder="CEP">
-									</div>
-									<div class="col-md-4">
 										<label>Cidade <span class="obrigatorio">*</span></label><input required type="text" name="cidade"
-											class="form-control" placeholder="Cidade" maxlength="25">
+											class="form-control cidade" placeholder="Cidade" maxlength="25">
 									</div>
 									<div class="col-md-4">
 										<label>Estado <span class="obrigatorio">*</span></label>
-										<select class="form-control" name="estado">
+										<select class="form-control estado" name="estado">
 													<option value="">Selecione</option>
 													<option value="AC">Acre</option>
 													<option value="AL">Alagoas</option>
@@ -179,16 +218,12 @@ if(!isset($_SESSION['loginSession']) AND !isset($_SESSION['senhaSession']) ){
 													<option value="TO">Tocantins</option>
 										</select>
 									</div>
-
-
-
-
 								</div>
 
 
 								<div class="row"	>
 								<div clas="col-md-4">
-										<button class="btn btn-success" type="submit">
+										<button class="btn btn-success pull-right" type="submit">
 											Cadastrar <i class="glyphicon glyphicon-ok"></i>
 										</button>
 									</div>
@@ -229,6 +264,35 @@ if(!isset($_SESSION['loginSession']) AND !isset($_SESSION['senhaSession']) ){
 
 	<!-- Theme JavaScript -->
 	<script src="../js/agency.min.js"></script>
+<script>
 
+    $(document).ready(function(){
+        document.getElementById('data_atual').valueAsDate = new Date();
+        $('#data_atual').hide();
+    });
+
+    $(".cep").on('blur', function(){
+      var cep = $(this).val();
+      var novoCEP = cep.replace(/[\.-]/g, "");
+      $.ajax({
+        type: "GET",
+        url : "//viacep.com.br/ws/" + novoCEP + "/json/",
+        dataType : "json",
+        success : function(data){
+          console.log(data);
+          $(".logradouro").val(data.logradouro);
+          $(".bairro").val(data.bairro);
+          $(".numero").val(data.numero);
+          $(".complemento").val(data.complemento);
+          $(".cidade").val(data.localidade);
+          $(".estado").val(data.uf);
+
+        }, error: function(erro){
+          alert('não foi possivel buscar o CEP');
+        }
+      });
+    })
+
+</script>
 </body>
 </html>

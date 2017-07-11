@@ -4,6 +4,8 @@
 					header("Location: index.php");
 					exit;
 			}
+
+			@include("../conexao.php");
  ?>
 
 <!DOCTYPE html>
@@ -55,7 +57,24 @@
     include ("../menu.php");
     @$msg = $_REQUEST['msg'];
 
-  ?>
+		$query = mysql_query("SELECT perfil FROM usuario WHERE codigo =".$_SESSION['idSession']);
+		$resultado = mysql_fetch_object($query);
+		$perfil = $resultado->perfil;
+
+		if($perfil != 1){
+?>
+
+		<script>
+		// setTimeout(function(){ alert("Hello"); }, 3000);
+		// 	sweetAlert("Erro de autenticação", "Você não tem permissão para acessar essa funcionalidade", "error");
+		// 	setTimeout(function() { console.log("setTimeout: Ja passou 1 segundo!"); }, 5000);
+			alert("No momento você não possui autorização para acessar essa funcionalidade. Por favor, contate o administrador!");
+			window.location.href = "../welcome.php";
+		</script>
+<?php
+	 }
+?>
+
 	<?php
       if($msg=='cadastro_sucesso'){
   ?>
@@ -71,6 +90,16 @@
   ?>
 	<script>
 		sucesso_altera_usuario();
+	</script>
+	<?php
+  }
+  ?>
+
+	<?php
+  if($msg=='sucesso_exclusao'){
+  ?>
+	<script>
+		sucesso_exclusao_usuario();
 	</script>
 	<?php
   }
@@ -120,12 +149,13 @@
 													</center></th>
 												<th id="opcoes"><center>Código</center></th>
 												<th><center>Login</center></th>
+												<th><center>Email</center></th>
 											</tr>
 										</thead>
 										<?php
-                                @include("../conexao.php");
+
                                 @$buscar = $_REQUEST['buscar'];
-                                $sql = mysql_query("SELECT * FROM usuario ORDER BY nome ");
+                                $sql = mysql_query("SELECT * FROM usuario ORDER BY email ");
                                 $row = mysql_num_rows($sql);
                                 if($row == 0){
                                  ?>
@@ -141,13 +171,16 @@
 										<tbody>
 											<tr>
 												<td>
-													<a	href="formAlteraUsuario.php?codigo=<?=$linha['codigo']?>" class="btn btn-default"><i class="fa fa-pencil"></i></a>
-													<a href="#" data-toggle="modal" data-target="#myModal" class="btn btn-danger" ><i class="fa fa-trash"></i></a>
+													<a href="formAlteraUsuario.php?codigo=<?=$linha['codigo']?>" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+													<button onClick="confirma_excluir_usuario(<?=$linha['codigo']?>)" class="btn btn-danger"><i class="fa fa-trash"></i></button>
 												<td id="link_cliente">
 													<?=$linha['codigo']?>
 												</td>
 												<td id="link_cliente">
-													<?=$linha['nome']?>
+													<?=$linha['login']?>
+												</td>
+												<td id="link_cliente">
+													<?=$linha['email']?>
 												</td>
 											</tr>
 										</tbody>
@@ -169,45 +202,7 @@
 		      include ("../footer.php");
 	     ?>
 
-			 <!-- Modal -->
-			 <form class="form-horizontal" action="exclui_usuario.php" method="post">
-			 <div id="myModal" class="modal fade" role="dialog">
-			 	<div class="modal-dialog">
 
-			 		<!-- Modal content-->
-			 		<div class="modal-content">
-			 			<div class="modal-header">
-			 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-			 				<h4 class="modal-title">Autenticação de permissão</h4>
-			 			</div>
-			 			<div class="modal-body">
-			 				<p>Para excluir o registro, digite o seu usuário e a sua senha</p>
-			 				<div class="row">
-
-								<input type="hidden" name="country" value="Norway">
-
-			 					<div class="col-md-4">
-			 						<label> Login </label>
-			 							<input required type="text" name="nome" class="form-control" placeholder="Nome" maxlength="25">
-			 					</div>
-			 					<div class="col-md-4">
-			 						<label>Senha</label>
-			 						<input required type="password" name="senha" class="form-control" placeholder="Senha" maxlength="25">
-			 					</div>
-
-			 			</div>
-			 			</div>
-
-			 			<div class="modal-footer">
-			 				<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-			 				<button type="submit" class="btn btn-success"  >Autenticar</button>
-
-			 			</div>
-			 		</div>
-
-			 	</div>
-			 </div>
-		</form>
 
 			<!-- jQuery -->
 			<script src="../vendor/jquery/jquery.min.js"></script>

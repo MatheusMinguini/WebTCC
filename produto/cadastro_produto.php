@@ -13,11 +13,12 @@
  $tamanho = $_POST['tamanho'];
  $valor_total = $_POST['valor_total'];
  $descricao = $_POST['descricao'];
+ $modelo = $_POST['modelo'];
 
 include '../conexao.php';
 
-$sql = "INSERT INTO produto(codigo_barra, nome, preco_custo, margem_lucro, preco_venda, grupo, marca, fornecedor, quantidade, data_entrada, tamanho, valor_total, descricao)
-values('$codigo_barra', '$nome', '$preco_custo', '$margem_lucro', '$preco_venda','$grupo', '$marca', '$fornecedor', '$quantidade', '$data_entrada', '$tamanho', '$valor_total', '$descricao')";
+$sql = "INSERT INTO produto(codigo_barra, nome, preco_custo, margem_lucro, preco_venda, grupo, marca, fornecedor, quantidade, data_entrada, tamanho, valor_total, descricao, modelo)
+values('$codigo_barra', '$nome', '$preco_custo', '$margem_lucro', '$preco_venda','$grupo', '$marca', '$fornecedor', '$quantidade', '$data_entrada', '$tamanho', '$valor_total', '$descricao','$modelo')";
 
 
 $result = @mysql_query($sql);

@@ -8,12 +8,20 @@
 include '../conexao.php';
 $id = $_REQUEST['codigo'];
 
-$query = "select * from usuario WHERE codigo=".$id;
+$query = "SELECT * FROM usuario WHERE codigo=".$id;
+$queryPerfil = mysql_query("SELECT * FROM perfilQuery");
+
 $dados = mysql_query($query);
 $resultado = mysql_fetch_object($dados);
+$resultadoPerfil = mysql_fetch_object($queryPerfil);
 
 $nome = $resultado->nome;
-$senha = $resultado->senha;
+$sobrenome = $resultado->sobrenome;
+$login = $resultado->login;
+$email = $resultado->email;
+$perfilNome = $resultadoPerfil->descricao;
+$perfilId = $resultadoPerfil->id;
+
 
 ?>
 <!DOCTYPE html>
@@ -91,13 +99,31 @@ $senha = $resultado->senha;
 							<form class="form-horizontal" action="altera_usuario.php" method="post">
 								<input type="hidden" name="codigo" value="<?php echo $id;?>">
 								<div class="form-group">
+
+									<div class="row col-md-12">
+										<div class="col-md-4">
+											<label> Nome <span class="obrigatorio">*</span></label><input required type="text" name="nome"
+												class="form-control" placeholder="Nome" maxlength="25" value="<?=$nome?>">
+										</div>
+										<div class="col-md-4">
+											<label> Sobrenome <span class="obrigatorio">*</span></label><input required type="text" name="sobrenome"
+												class="form-control" placeholder="Sobrenome" maxlength="25" value="<?=$sobrenome?>">
+										</div>
+										<div class="col-md-4">
+											<label>Login <span class="obrigatorio">*</span></label><input resquired type="text" name="login"
+												class="form-control" placeholder="Login" maxlength="25" value="<?=$login?>" ><br>
+										</div>
+									</div>
+
+								<div class="row col-md-12">
 									<div class="col-md-4">
-										<label>Nome <span class="obrigatorio">*</span></label><input resquired type="text" name="nome"
-											class="form-control" placeholder="Nome" maxlength="25" value="<?=$nome?>" >
+										<label>Email (Será usado para recuperação de senha) <span class="obrigatorio">*</span></label><input resquired type="text" name="email"
+											class="form-control" placeholder="Email" maxlength="25" value="<?=$email?>" >
 									</div>
 									<div class="col-md-4">
 										<label>Senha Atual <span class="obrigatorio">*</span></label><input required type="password"
 											name="senha" class="form-control" placeholder="????" maxlength="25">
+											<br>
 									</div>
 									<div class="col-md-4">
 										<label> Nova senha <span class="obrigatorio">*</span></label><input required type="password"
@@ -105,23 +131,35 @@ $senha = $resultado->senha;
 											placeholder="Nova Senha" maxlength="25">
 										</br>
 									</div>
+								</div>
+
+								<div class="row col-md-12">
 									<div class="col-md-4">
 										<label> Confirma a nova senha <span class="obrigatorio">*</span></label><input required
 											type="password" name="confsenha" class="form-control"
 											placeholder="Confirma a senha" maxlength="25">
 									</div>
+									<div class="col-md-4">
+										<label>Perfil <span class="obrigatorio">*</span></label>
+										<select name="perfil" class="form-control">
+											<option value="<?= $perfilId ?>"> <?= $perfilNome ?> </option>
+											<option value="1"> Administrativo </option>
+											<option value="2"> Operador </option>
+										</select>
+									</div>
+							</div>
+					</div>
+							<br>
+							<div class="row">
+								<div class="col-xs-3 pull-left">
+									<p><h6>Os campos com o sinal <span class="obrigatorio">' * '</span> são obrigatórios</h6></p>
 								</div>
-								<br>
-								<div class="row">
-									<div class="col-xs-3 pull-left">
-										<p><h6>Os campos com o sinal <span class="obrigatorio">' * '</span> são obrigatórios</h6></p>
-									</div>
-									<div clas="col-md-4">
-										<button class="btn btn-success" type="submit">
-											Alterar <i class="glyphicon glyphicon-ok"></i>
-										</button>
-									</div>
-							</form>
+								<div clas="col-md-4">
+									<button class="btn btn-success" type="submit">
+										Alterar <i class="glyphicon glyphicon-ok"></i>
+									</button>
+								</div>
+						</form>
 
 						</div>
 					</div>

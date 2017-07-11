@@ -137,7 +137,7 @@
                         <div class="panel-body">
                             <div class="row">
                               <div class="col-md-4">
-                                  <a class="btn btn-info btn-lg" href=".php" type="button" name="button" style="background-color: black; color: white;"><i class="fa fa-usd"></i> Receber de um cliente</a>
+                                  <a class="btn btn-info btn-lg" href="../crediario/index_crediario.php" type="button" name="button" style="background-color: black; color: white;"><i class="fa fa-usd"></i> Receber de um cliente</a>
                               </div>
                               <div class="col-md-4">
                                   <a class="btn btn-info btn-lg" href="index_pagamento.php" type="button" name="button" style="background-color: black; color: white;"><i class="fa fa-credit-card"></i> Cadastrar forma de pagamento</a>

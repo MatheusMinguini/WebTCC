@@ -191,16 +191,11 @@ $descricao = $resultado->descricao;
                     <input required  type="date" name="data_entrada" class="form-control data_entrada" value="<?=$data_entrada?>">
                   </div>
 
-                  <div class="col-md-4">
+									<div class="col-md-4">
 										<label class="control-label">Tamanho do produto</label>
-										<select class="form-control col-md-4" name="tamanho">
-											<option selected value="<?=$tamanho?>"><?=$tamanho?></option>
-											<option value="P">P</option>
-											<option value="M">M</option>
-											<option value="G">G</option>
-										</select>
-									</br>
+										<input  type="text" name="tamanho" class="form-control" value="<?=$tamanho?>">
 									</div>
+
 								</div>
 							</div>
 

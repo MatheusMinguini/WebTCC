@@ -19,12 +19,16 @@ $rg = $resultado->rg;
 $data_nascimento = $resultado->data_nascimento;
 $telefone = $resultado->telefone;
 $celular = $resultado->celular;
-$rua = $resultado->rua;
+$email = $resultado->email;
+$logradouro = $resultado->logradouro;
 $bairro = $resultado->bairro;
 $numero = $resultado->numero;
 $cep = $resultado->cep;
+$complemento = $resultado->complemento;
 $cidade = $resultado->cidade;
 $estado = $resultado->estado;
+$email = $resultado->email;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -77,10 +81,8 @@ $estado = $resultado->estado;
 	<!-- Header -->
 	<header>
 		<div class="container">
-
 			<div class="intro-text">
 				<div class="intro-lead-in"></div>
-
 			</div>
 		</div>
 	</header>
@@ -98,138 +100,152 @@ $estado = $resultado->estado;
 								class="btn btn-default"><i class="fa fa-reply"></i> Voltar</a>
 						</div>
 						<div class="panel-body">
-							<form class="form-horizontal" action="altera_cliente.php" method="post">
-								<input type="hidden" name="codigo" value="<?php echo $id;?>">
-								<div class="form-group">
-									<div class="page-header">
-										<h4 id="cabecalho-form-cliente" align="left">Dados
-											Pessoais</h4>
-									</div>
-									<div class="col-md-4">
-										<label>* Nome <span class="obrigatorio">*</span></label><input required type="text" name="nome"
-											class="form-control" placeholder="Nome" maxlength="25" value="<?=$nome?>">
-									</div>
-									<div class="col-md-4">
-										<label>Sobrenome</label><input  type="text"
-											name="sobrenome" class="form-control" placeholder="Sobrenome" maxlength="25"
-											value="<?=$sobrenome?>">
-									</div>
-									<div class="col-md-4">
-										<label>* CPF <span class="obrigatorio">*</span></label><input readonly required id="cpf"
-											type="text" name="cpf" class="form-control" placeholder="CPF" maxlength="20"
-											value="<?=$cpf?>">
-											</br>
-									</div>
+              <form class="form-horizontal" action="altera_cliente.php" method="post">
+                <input type="hidden" name="login_usuario" value="<?= $_SESSION['idSession'] ?>" />
+                <div class="form-group">
+                  <input type="hidden" name="codigo" value="<?php echo $id;?>">
+                  <div class="page-header">
+                    <h4 id="cabecalho-form-cliente" align="left">Dados
+                      Pessoais</h4>
+                  </div>
 
-									<div class="col-md-4">
-										<label>* RG <span class="obrigatorio">*</span></label><input readonly required type="text" name="rg"
-											class="form-control" placeholder="RG" maxlength="20" value="<?=$rg?>">
-									</div>
-									<div class="col-md-4">
-										<label>Data de nascimento</label><input id="data" type="date"
-											name="data_nascimento" class="form-control"
-											placeholder="data de nascimento"
-											value="<?=$data_nascimento?>">
-									</div>
-									<div class="col-md-4">
-										<label>* Telefone <span class="obrigatorio">*</span></label>
-										<input required id="telefone" type="text" name="telefone" class="form-control" maxlength="15" value="<?=$telefone?>">
-									</br>
-								 </div>
-								 <div class="row">
-										 <div class="col-md-4">
-											 <label>Celular</label>
-											 <input id="celular" type="text" name="celular" class="form-control"  maxlength="15" value="<?=$celular?>">
-										 </div>
-							  </div>
+                  <input type="date" name="data_alteracao" id="data_atual"/>
 
-								<div class="page-header">
-									<h4 id="cabecalho-form-cliente" align="left">Localizacão</h4>
-								</div>
-								<div class="form-group">
-									<div class="col-md-4">
-										<label>* Rua <span class="obrigatorio">*</span></label><input required type="text" name="rua"
-											class="form-control" placeholder="Rua" maxlength="30" value="<?=$rua?>">
-									</div>
-									<div class="col-md-4">
-										<label>* Bairro <span class="obrigatorio">*</span></label><input required type="text" name="bairro"
-											class="form-control" placeholder="Bairro" maxlength="30"
-											value="<?=$bairro?>">
-									</div>
-									<div class="col-md-4">
-										<label>* Número <span class="obrigatorio">*</span></label><input required type="text" name="numero"
-											class="form-control" placeholder="Número" maxlength="10"
-											value="<?=$numero?>">
-										</br>
-									</div>
-									<div class="col-md-4">
-										<label>* CEP <span class="obrigatorio">*</span></label><input required id="cep" type="text"
-											name="cep" class="form-control" placeholder="CEP" maxlength="25"
-											value="<?=$cep?>">
-									</div>
-									<div class="col-md-4">
-										<label>* Cidade <span class="obrigatorio">*</span></label><input required type="text" name="cidade"
-											class="form-control" placeholder="Cidade" maxlength="25"
-											value="<?=$cidade?>">
-									</div>
-									<div class="col-md-4">
-										<label>* Estado <span class="obrigatorio">*</span></label>
-										<select class="form-control" name="estado">
-											<option value="<?=$estado?>"><?=$estado?></option>
-										 <option>----------------------------------------------------</option>
-													<option value="AC">Acre</option>
-													<option value="AL">Alagoas</option>
-													<option value="AP">Amapá</option>
-													<option value="AM">Amazonas</option>
-													<option value="BA">Bahia</option>
-													<option value="CE">Ceará</option>
-													<option value="DF">Distrito Federal</option>
-													<option value="ES">Espirito Santo</option>
-													<option value="GO">Goiás</option>
-													<option value="MA">Maranhão</option>
-													<option value="MS">Mato Grosso do Sul</option>
-													<option value="MT">Mato Grosso</option>
-													<option value="MG">Minas Gerais</option>
-													<option value="PA">Pará</option>
-													<option value="PB">Paraíba</option>
-													<option value="PR">Paraná</option>
-													<option value="PE">Pernambuco</option>
-													<option value="PI">Piauí</option>
-													<option value="RJ">Rio de Janeiro</option>
-													<option value="RN">Rio Grande do Norte</option>
-													<option value="RS">Rio Grande do Sul</option>
-													<option value="RO">Rondônia</option>
-													<option value="RR">Roraima</option>
-													<option value="SC">Santa Catarina</option>
-													<option value="SP">São Paulo</option>
-													<option value="SE">Sergipe</option>
-													<option value="TO">Tocantins</option>
-												</select>
-										</br>
-									</div>
+                  <div class="col-md-4">
+                    <label>* Nome <span class="obrigatorio">*</span></label><input required type="text" name="nome"
+                      class="form-control" placeholder="Nome" maxlength="25" value="<?=$nome?>">
+                  </div>
+                  <div class="col-md-4">
+                    <label>Sobrenome</label><input  type="text"
+                      name="sobrenome" class="form-control" placeholder="Sobrenome" maxlength="25"
+                      value="<?=$sobrenome?>">
+                  </div>
+                  <div class="col-md-4">
+                    <label>* CPF <span class="obrigatorio">*</span></label><input readonly required id="cpf"
+                      type="text" name="cpf" class="form-control" placeholder="CPF" maxlength="20"
+                      value="<?=$cpf?>">
+                      </br>
+                  </div>
+                  <div class="col-md-4">
+                    <label>* RG <span class="obrigatorio">*</span></label><input readonly required type="text" name="rg"
+                      class="form-control" placeholder="RG" maxlength="20" value="<?=$rg?>">
+                  </div>
+                  <div class="col-md-4">
+                    <label>Data de nascimento</label><input id="data" type="date"
+                      name="data_nascimento" class="form-control"
+                      placeholder="data de nascimento"
+                      value="<?=$data_nascimento?>">
+                  </div>
+                  <div class="col-md-4">
+                    <label>* Telefone <span class="obrigatorio">*</span></label>
+                    <input required id="telefone" type="text" name="telefone" class="form-control" maxlength="15" value="<?=$telefone?>">
+                  </br>
+                 </div>
 
-								</form>
+                 <div class="row">
+                     <div class="col-md-4">
+                       <label>Celular</label>
+                       <input id="celular" type="text" name="celular" class="form-control"  maxlength="15" value="<?=$celular?>">
+                     </div>
+                     <div class="col-md-4">
+                       <label>Email</label>
+                       <input id="celular" type="text" name="email" class="form-control"  maxlength="30" value="<?=$email?>">
+                     </div>
+                 </div>
 
+                <div class="page-header">
+                  <h4 id="cabecalho-form-cliente" align="left">Localização</h4>
+                </div>
 
-								</div>
+                <div class="container">
+                  <div class="row pull-left">
+                    <p><h6>Digite o <span class="obrigatorio">CEP</span>, buscaremos o endereço baseado nele!</h6></p>
+                  </div>
+                </div>
 
-							</br>
-								<div class="row">
-									<div clas="col-md-4">
-										<button class="btn btn-success" type="submit">	Alterar <i class="glyphicon glyphicon-ok"></i></button>
-									</div>
-
-									<div class="row col-xs-3 pull-left">
-										<p><h6>Os campos com o sinal <span class="obrigatorio">' * '</span> são obrigatórios</h6></p>
-									</div>
+                <div class="row col-md-12">
+                  <div class="col-md-4">
+                    <label>CEP <span class="obrigatorio">*</span></label>
+                    <input required id="cep" type="text" name="cep" class="form-control cep" placeholder="CEP" value="<?=$cep?>">
+                    <br>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-4">
+                    <label> Logradouro <span class="obrigatorio">*</span></label><input required type="text" name="logradouro"
+                      class="form-control logradouro" placeholder="Rua" maxlength="30" value="<?=$logradouro?>">
+                  </div>
+                  <div class="col-md-4">
+                    <label>Bairro <span class="obrigatorio">*</span></label><input required type="text" name="bairro"
+                      class="form-control bairro" placeholder="Bairro" maxlength="30" value="<?=$bairro?>">
+                  </div>
+                  <div class="col-md-4">
+                    <label>Número <span class="obrigatorio">*</span></label><input required type="text" name="numero"
+                      class="form-control numero" placeholder="Número" maxlength="10" value="<?=$numero?>">
+                    </br>
+                  </div>
+                  <div class="col-md-4">
+                    <label>Complemento </label><input type="text" name="complemento"
+                      class="form-control complemento" placeholder="Número" maxlength="10" value="<?=$complemento?>">
+                    </br>
+                  </div>
+                  <div class="col-md-4">
+                    <label>Cidade <span class="obrigatorio">*</span></label><input required type="text" name="cidade"
+                      class="form-control cidade" placeholder="Cidade" maxlength="25" value="<?=$cidade?>">
+                  </div>
+                  <div class="col-md-4">
+                    <label>Estado <span class="obrigatorio">*</span></label>
+                    <select class="form-control estado" name="estado">
+                          <option value="<?=$estado?>"><?=$estado?></option>
+                          <option value="AC">Acre</option>
+                          <option value="AL">Alagoas</option>
+                          <option value="AP">Amapá</option>
+                          <option value="AM">Amazonas</option>
+                          <option value="BA">Bahia</option>
+                          <option value="CE">Ceará</option>
+                          <option value="DF">Distrito Federal</option>
+                          <option value="ES">Espirito Santo</option>
+                          <option value="GO">Goiás</option>
+                          <option value="MA">Maranhão</option>
+                          <option value="MS">Mato Grosso do Sul</option>
+                          <option value="MT">Mato Grosso</option>
+                          <option value="MG">Minas Gerais</option>
+                          <option value="PA">Pará</option>
+                          <option value="PB">Paraíba</option>
+                          <option value="PR">Paraná</option>
+                          <option value="PE">Pernambuco</option>
+                          <option value="PI">Piauí</option>
+                          <option value="RJ">Rio de Janeiro</option>
+                          <option value="RN">Rio Grande do Norte</option>
+                          <option value="RS">Rio Grande do Sul</option>
+                          <option value="RO">Rondônia</option>
+                          <option value="RR">Roraima</option>
+                          <option value="SC">Santa Catarina</option>
+                          <option value="SP">São Paulo</option>
+                          <option value="SE">Sergipe</option>
+                          <option value="TO">Tocantins</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+    							<div clas="col-md-4">
+    								<button class="btn btn-success" type="submit">	Alterar <i class="glyphicon glyphicon-ok"></i></button>
+    							</div>
+    							<div class="row col-xs-3 pull-left">
+    								<p><h6>Os campos com o sinal <span class="obrigatorio">' * '</span> são obrigatórios</h6></p>
+    							</div>
+    						</div>
+              </form>
 						</div>
+
+						</br>
+
+
 					</div>
 				</div>
 			</div>
 			<div class="row text-center"></div>
 		</div>
-	</div>
-</div>
 	</section>
 
 	<?php
@@ -258,6 +274,36 @@ $estado = $resultado->estado;
 	<!-- Theme JavaScript -->
 	<script src="../js/agency.min.js"></script>
 
+  <script>
+
+  $(document).ready(function(){
+      document.getElementById('data_atual').valueAsDate = new Date();
+      $('#data_atual').hide();
+  });
+
+      $(".cep").on('blur', function(){
+        var cep = $(this).val();
+        var novoCEP = cep.replace(/[\.-]/g, "");
+        $.ajax({
+          type: "GET",
+          url : "//viacep.com.br/ws/" + novoCEP + "/json/",
+          dataType : "json",
+          success : function(data){
+            console.log(data);
+            $(".logradouro").val(data.logradouro);
+            $(".bairro").val(data.bairro);
+            $(".numero").val(data.numero);
+            $(".complemento").val(data.complemento);
+            $(".cidade").val(data.localidade);
+            $(".estado").val(data.uf);
+
+          }, error: function(erro){
+            alert('não foi possivel buscar o produto');
+          }
+        });
+      })
+
+  </script>
 </body>
 
 </html>

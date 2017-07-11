@@ -54,7 +54,7 @@
     include ("../menu.php");
 		@$pagina = $_GET['pag'];
     @$msg = $_REQUEST['msg'];
-		$limite = 5;
+		$limite = 20;
 		if(!$pagina)
 		{
 				$pagina = 1;
@@ -128,10 +128,44 @@
 						<option value=""> </option>
 						<option value="codigo_barra">Código de barras</option>
 						<option value="nome">Nome</option>
+						<option value="modelo">Modelo</option>
 					</select>
 				</div>
+				<input  id ="busca" type="checkbox" name="buscar1"> <span id="buscaCss">Busca personalizada</span> <br>
 				<br>
 			</form>
+
+			<!-- Busca Personalizada-->
+			<form  action="buscaPersonalizada.php" method="post">
+				<div class="row" id="buscaPersonalizada">
+						<legend id = "buscaCss">Busca Personalizada</legend>
+
+						<div class="col-md-3">
+							<label id="buscaCss">Opções</label>
+							<select class="form-control" name="opcoes">
+										<option value="">Selecione</option>
+										<option value="nome">Nome</option>
+										<option value="marca">Marca</option>
+										<option value="modelo">Modelo</option>
+										<option value="grupo">Grupo</option>
+							</select>
+						</div>
+
+						<div class="col-md-3">
+							<label id="buscaCss" >Digite o número que deseja buscar</label>
+							<input class="form-control" name="tamanho" placeholder="Tamanho" />
+						</div>
+						<div class="col-md-3">
+							<label id="buscaCss">Descrição</label>
+							<input type="text" name="buscar" placeholder="Buscar produto..." class="form-control" />
+						</div>
+
+						<div class="col-md-2">
+							<button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-search" ></i>Pesquisar</button>
+						</div>
+				</div>
+			</form>
+
 			<br>
 			<div class="row">
 				<div class="col-lg-12 text-center">
@@ -145,6 +179,7 @@
 								<a id="botao-adicionar" class="btn btn-default" href="formProduto.php"><i class="fa fa-plus"></i> Adicionar</a>
 								<a id="botao-adicionar-grupo" class="btn btn-default"	href="formGrupo.php"><i class="fa fa-plus"></i> Grupo</a>
 								<a id="botao-adicionar-marca" class="btn btn-default" href="formMarca.php"><i class="fa fa-plus"></i> Marca</a>
+								<a id="botao-adicionar-marca" class="btn btn-default" href="formModelo.php"><i class="fa fa-plus"></i> Modelo</a>
 							</div>
 						</div>
 
@@ -174,7 +209,20 @@
 
 																@$buscar = $_REQUEST['buscar'];
 																@$opcao = $_REQUEST['opcao'];
+																@$tamanho = $_REQUEST['tamanho'];
+																@$buscar1 = $_REQUEST['buscar1'];
 
+																if($buscar1 == true){
+																	if($opcao == 'modelo'){
+																		$sql = mysql_query("SELECT * FROM produto p
+																			INNER JOIN modelo m ON m.codigo = p.modelo
+																			WHERE p.vendido = 'n'
+																			AND p.tamanho = $tamanho
+																			AND m.modelo LIKE '%".$buscar1."%'
+																			ORDER BY nome LIMIT $inicio, $limite");
+																		$row = mysql_num_rows($sql);
+																	}
+																}
 																if ($opcao == '') {
 																	$opcao = 'nome';
 																	$sql = mysql_query("SELECT * FROM produto WHERE $opcao LIKE '%".$buscar."%' AND vendido = 'n' ORDER BY nome LIMIT $inicio, $limite");
@@ -188,6 +236,15 @@
 
 																if ($opcao == 'codigo_barra'){
 																	$sql = mysql_query("SELECT * FROM produto WHERE $opcao = $buscar AND vendido = 'n' ORDER BY nome LIMIT $inicio, $limite");
+																	$row = mysql_num_rows($sql);
+																}
+
+																if($opcao == 'modelo'){
+																	$sql = mysql_query("SELECT * FROM produto p
+																			INNER JOIN modelo m ON p.modelo = M.CODIGO
+																			WHERE p.vendido = 'n'
+																			AND m.modelo LIKE '%".$buscar."%'
+																			ORDER BY p.nome LIMIT $inicio, $limite");
 																	$row = mysql_num_rows($sql);
 																}
 
@@ -286,6 +343,27 @@
 
 	<!-- Theme JavaScript -->
 	<script src="../js/agency.min.js"></script>
+
+	<script>
+
+				$(window).load(function(){
+					verifica(false);
+				});
+
+
+				$("#busca").change(function(){
+						  	verifica($(this).prop("checked"));
+				});
+
+				function verifica(check){
+							if(check == true){
+								$("#buscaPersonalizada").show();
+							}else{
+								$("#buscaPersonalizada").hide();
+							}
+				}
+
+	</script>
 
 </body>
 

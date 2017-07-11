@@ -15,6 +15,11 @@ $resultado = mysql_fetch_object($dados);
 
 $nome = $resultado->nome;
 $cnpj = $resultado->cnpj;
+$logradouro = $resultado->logradouro;
+$bairro = $resultado->bairro;
+$numero = $resultado->numero;
+$cep = $resultado->cep;
+$complemento = $resultado->complemento;
 $cidade = $resultado->cidade;
 $estado = $resultado->estado;
 $email = $resultado->email;
@@ -110,70 +115,104 @@ $celular = $resultado->celular;
 										<input required type="text" name="cnpj" class="form-control" placeholder="CNPJ"value="<?=$cnpj?>">
 									</div>
 									<div class="col-md-4">
-										<label>Cidade <span class="obrigatorio">*</span></label>
-										<input readonly type="text" name="cidade" class="form-control" placeholder="Cidade" value="<?=$cidade?>">
-									  </br>
-									</div>
-									<div class="col-md-4">
-										<label>Estado <span class="obrigatorio">*</span></label>
-										<select class="form-control" name="estado">
-											<option value="<?=$estado?>"><?=$estado?></option>
-										 <option>----------------------------------------------------</option>
-													<option value="AC">Acre</option>
-													<option value="AL">Alagoas</option>
-													<option value="AP">Amapá</option>
-													<option value="AM">Amazonas</option>
-													<option value="BA">Bahia</option>
-													<option value="CE">Ceará</option>
-													<option value="DF">Distrito Federal</option>
-													<option value="ES">Espirito Santo</option>
-													<option value="GO">Goiás</option>
-													<option value="MA">Maranhão</option>
-													<option value="MS">Mato Grosso do Sul</option>
-													<option value="MT">Mato Grosso</option>
-													<option value="MG">Minas Gerais</option>
-													<option value="PA">Pará</option>
-													<option value="PB">Paraíba</option>
-													<option value="PR">Paraná</option>
-													<option value="PE">Pernambuco</option>
-													<option value="PI">Piauí</option>
-													<option value="RJ">Rio de Janeiro</option>
-													<option value="RN">Rio Grande do Norte</option>
-													<option value="RS">Rio Grande do Sul</option>
-													<option value="RO">Rondônia</option>
-													<option value="RR">Roraima</option>
-													<option value="SC">Santa Catarina</option>
-													<option value="SP">São Paulo</option>
-													<option value="SE">Sergipe</option>
-													<option value="TO">Tocantins</option>
-												</select>
-									</div>
-									<div class="col-md-4">
 										<label>E-mail</label>
 										<input  type="text" name="email" class="form-control" placeholder="E-mail" value="<?=$email?>">
 									</div>
-									<div class="col-md-4">
-										<label>Telefone</label>
-										<input required id="telefone" type="text" name="telefone" class="form-control" value="<?=$telefone?>">
-									  </br>
+
+
+
+									<div class="row">
+										<div class="col-md-4">
+											<label>Telefone</label>
+											<input required id="telefone" type="text" name="telefone" class="form-control" value="<?=$telefone?>">
+										</div>
+										<div class="col-md-4">
+											<label>Celular</label>
+											<input id="celular" type="text" name="celular" class="form-control"  maxlength="15" value="<?=$celular?>">
+											</br>
+										</div>
 									</div>
-									<div class="col-md-4">
-										<label>Celular <span class="obrigatorio">*</span></label>
-										<input required id="celular" type="text" name="celular" class="form-control" value="<?=$celular?>">
-									</div>
-								</div>
-								</fieldset>
+
+									<div class="page-header">
+										<h4 id="cabecalho-form-cliente" align="left">Localização</h4>
 									</div>
 
 
-								<div class="row">
-									<div clas="col-md-4">
-										<button class="btn btn-success" type="submit"> Alterar <i class="glyphicon glyphicon-ok"></i></button>
-									  </br>
-									</div>
-							</form>
+									<div class="row col-md-12">
+	                  <div class="col-md-4">
+	                    <label>CEP </label>
+	                    <input required id="cep" type="text" name="cep" class="form-control cep" placeholder="CEP" value="<?=$cep?>">
+	                    <br>
+	                  </div>
+	                </div>
+	                <div class="form-group">
+	                  <div class="col-md-4">
+	                    <label> Logradouro </label><input required type="text" name="logradouro"
+	                      class="form-control logradouro" placeholder="Rua" maxlength="30" value="<?=$logradouro?>">
+	                  </div>
+	                  <div class="col-md-4">
+	                    <label>Bairro </label><input required type="text" name="bairro"
+	                      class="form-control bairro" placeholder="Bairro" maxlength="30" value="<?=$bairro?>">
+	                  </div>
+	                  <div class="col-md-4">
+	                    <label>Número </label><input required type="text" name="numero"
+	                      class="form-control numero" placeholder="Número" maxlength="10" value="<?=$numero?>">
+	                    </br>
+	                  </div>
+	                  <div class="col-md-4">
+	                    <label>Complemento </label><input type="text" name="complemento"
+	                      class="form-control complemento" placeholder="Número" maxlength="10" value="<?=$complemento?>">
+	                    </br>
+	                  </div>
+	                  <div class="col-md-4">
+	                    <label>Cidade</label><input required type="text" name="cidade"
+	                      class="form-control cidade" placeholder="Cidade" maxlength="25" value="<?=$cidade?>">
+	                  </div>
+	                  <div class="col-md-4">
+	                    <label>Estado</label>
+	                    <select class="form-control estado" name="estado" >
+	                          <option value="<?=$estado?>"><?=$estado?></option>
+	                          <option value="AC">Acre</option>
+	                          <option value="AL">Alagoas</option>
+	                          <option value="AP">Amapá</option>
+	                          <option value="AM">Amazonas</option>
+	                          <option value="BA">Bahia</option>
+	                          <option value="CE">Ceará</option>
+	                          <option value="DF">Distrito Federal</option>
+	                          <option value="ES">Espirito Santo</option>
+	                          <option value="GO">Goiás</option>
+	                          <option value="MA">Maranhão</option>
+	                          <option value="MS">Mato Grosso do Sul</option>
+	                          <option value="MT">Mato Grosso</option>
+	                          <option value="MG">Minas Gerais</option>
+	                          <option value="PA">Pará</option>
+	                          <option value="PB">Paraíba</option>
+	                          <option value="PR">Paraná</option>
+	                          <option value="PE">Pernambuco</option>
+	                          <option value="PI">Piauí</option>
+	                          <option value="RJ">Rio de Janeiro</option>
+	                          <option value="RN">Rio Grande do Norte</option>
+	                          <option value="RS">Rio Grande do Sul</option>
+	                          <option value="RO">Rondônia</option>
+	                          <option value="RR">Roraima</option>
+	                          <option value="SC">Santa Catarina</option>
+	                          <option value="SP">São Paulo</option>
+	                          <option value="SE">Sergipe</option>
+	                          <option value="TO">Tocantins</option>
+	                    </select>
+	                  </div>
+	                </div>
 
-						</div>
+									<div class="row">
+										<div clas="col-md-4">
+											<button class="btn btn-success" type="submit"> Alterar <i class="glyphicon glyphicon-ok"></i></button>
+											</br>
+											<div class="row col-xs-3 pull-left">
+		    								<p><h6>Os campos com o sinal <span class="obrigatorio">' * '</span> são obrigatórios</h6></p>
+		    							</div>
+										</div>
+									</div>
+								</form>
 					</div>
 				</div>
 			</div>
@@ -207,6 +246,30 @@ $celular = $resultado->celular;
 	<!-- Theme JavaScript -->
 	<script src="../js/agency.min.js"></script>
 
+	<script>
+			$(".cep").on('blur', function(){
+				var cep = $(this).val();
+				var novoCEP = cep.replace(/[\.-]/g, "");
+				$.ajax({
+					type: "GET",
+					url : "//viacep.com.br/ws/" + novoCEP + "/json/",
+					dataType : "json",
+					success : function(data){
+						console.log(data);
+						$(".logradouro").val(data.logradouro);
+						$(".bairro").val(data.bairro);
+						$(".numero").val(data.numero);
+						$(".complemento").val(data.complemento);
+						$(".cidade").val(data.localidade);
+						$(".estado").val(data.uf);
+
+					}, error: function(erro){
+						alert('não foi possivel buscar o produto');
+					}
+				});
+			})
+
+	</script>
 </body>
 
 </html>

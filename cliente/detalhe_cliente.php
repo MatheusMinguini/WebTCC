@@ -8,7 +8,11 @@ if(!isset($_SESSION['loginSession']) AND !isset($_SESSION['senhaSession']) ){
 include '../conexao.php';
 $id = $_REQUEST['codigo'];
 
-$query = "SELECT * FROM cliente WHERE codigo=".$id;
+$query = "SELECT c.*, u.login as usuario, us.login as usuario_alteracao FROM cliente c
+INNER JOIN usuario u ON u.codigo = c.id_usuario
+INNER JOIN usuario us ON us.codigo = c.id_usuario_alteracao
+WHERE c.codigo=".$id;
+
 $dados = mysql_query($query);
 $resultado = mysql_fetch_object($dados);
 
@@ -20,12 +24,18 @@ $rg = $resultado->rg;
 $data_nascimento = $resultado->data_nascimento;
 $telefone = $resultado->telefone;
 $celular = $resultado->celular;
-$rua = $resultado->rua;
+$logradouro = $resultado->logradouro;
 $bairro = $resultado->bairro;
 $numero = $resultado->numero;
 $cep = $resultado->cep;
 $cidade = $resultado->cidade;
 $estado = $resultado->estado;
+$complemento = $resultado->complemento;
+$email = $resultado->email;
+$data_cadastro = $resultado->data_cadastro;
+$data_ultima_alteracao = $resultado->data_ultima_alteracao;
+$usuario = $resultado->usuario;
+$usuario_alteracao = $resultado->usuario_alteracao;
 ?>
 
 <!DOCTYPE html>
@@ -57,16 +67,11 @@ $estado = $resultado->estado;
 <link
 	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
 	rel='stylesheet' type='text/css'>
-
 <!-- Theme CSS -->
 <link href="../css/agency2.css" rel="stylesheet">
+<!-- mensagens -->
+<script src="../js/mensagens.js"></script>
 
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 </head>
 
@@ -152,14 +157,21 @@ $estado = $resultado->estado;
 								<h4 id="cabecalho-form-cliente" align="left">Localização</h4>
 							</div>
 							<div class="row">
+                <div class="col-md-4">
+									<h5>
+										<b>CEP: </b><span id="dados_cliente"> <?=$cep?></span>
+									</h5>
+								</div>
+              </div>
+              <div class="row">
 								<div class="col-md-4">
 									<h5>
-										<b>Endereço: </b><span id="dados_cliente"> <?=$rua?></span>
+										<b>Logradouro: </b><span id="dados_cliente"> <?=$logradouro?></span>
 									</h5>
 								</div>
 								<div class="col-md-4">
 									<h5>
-										<b>bairro: </b><span id="dados_cliente"> <?=$bairro?></span>
+										<b>Bairro: </b><span id="dados_cliente"> <?=$bairro?></span>
 									</h5>
 								</div>
 								<div class="col-md-4">
@@ -167,12 +179,16 @@ $estado = $resultado->estado;
 										<b>Número: </b><span id="dados_cliente"> <?=$numero?></span>
 									</h5>
 								</div>
-							</div>
-							<br>
-							<div class="row">
-								<div class="col-md-4">
+              </div>
+              <div class="row">
+                <?php
+                    if($complemento == null){
+                      $complemento = "Não cadastrado";
+                    }
+                 ?>
+                <div class="col-md-4">
 									<h5>
-										<b>CEP: </b><span id="dados_cliente"> <?=$cep?></span>
+										<b>Complemento: </b><span id="dados_cliente"> <?=$complemento ?></span>
 									</h5>
 								</div>
 								<div class="col-md-4">
@@ -185,7 +201,8 @@ $estado = $resultado->estado;
 										<b>Estado: </b><span id="dados_cliente"> <?=$estado?></span>
 									</h5>
 								</div>
-							</div>
+              </div>
+
 
 
 							<div class="page-header">
@@ -202,9 +219,78 @@ $estado = $resultado->estado;
 										<b>Celular: </b><span id="dados_cliente"> <?=$celular?></span>
 									</h5>
 								</div>
+                <div class="col-md-4">
+                  <?php
+                    if($email == null){
+                      $email = "não cadastrado";
+                    }
+                  ?>
+									<h5>
+										<b>Email: </b><span id="dados_cliente"> <?=$email?></span>
+									</h5>
+                  <br>
+								</div>
+
+                <div class="page-header">
+                  <h4 id="cabecalho-form-cliente" align="left">Histórico do registro</h4>
+                </div>
+                <div class="row col-md-12">
+                    <div class="col-md-4">
+                      <h5>
+                        <b>Cadastrado por: </b><span id="dados_cliente"> <?=$usuario?></span>
+                      </h5>
+                    </div>
+
+                    <?php
+                      if($data_cadastro == '0000-00-00'){
+    										$data_cadastro = 'Data não cadastrada!';
+    									}else{
+    										$data_cadastro = date('d/m/Y', strtotime($data_cadastro));
+    									}
+                    ?>
+
+                    <div class="col-md-4">
+    									<h5>
+    										<b>Data do cadastro: </b><span id="dados_cliente"><?= $data_cadastro ?></span>
+    									</h5>
+    								</div>
+                 </div>
+
+                 <?php
+                   if($data_cadastro == '0000-00-00'){
+                     $data_ultima_alteracao = 'Data não cadastrada!';
+                   }else{
+                      $data_ultima_alteracao = date('d/m/Y', strtotime($data_ultima_alteracao));
+                   }
+                 ?>
+
+                <div class="row col-md-12">
+                      <div class="col-md-4">
+      									<h5>
+      										<b>Data última alteração: </b><span id="dados_cliente"> <?=$data_ultima_alteracao?></span>
+      									</h5>
+      								</div>
+                      <div class="col-md-4">
+      									<h5>
+      										<b>Feita por: </b><span id="dados_cliente"> <?=$usuario_alteracao?></span>
+      									</h5>
+      								</div>
+                </div>
+
+                <br><br><br><br><br>
 							</div>
+
+
+                <div class="form-actions right pull-right">
+                  <a style="background-color: rgba(230, 22, 22, 0.85); color: white;" class="btn btn-default" onclick="confirma_enviar_email(<?=$id?>);"><i class="fa fa-pencil"></i> Enviar cobrança</a>
+                  <a style="background-color: #60266f; color: white;" class="btn btn-default" href="../email/formEmail.php?codigo=<?=$id?>"><i class="fa fa-envelope"></i> Enviar Email</a>
+                </div>
+
 
 						</div>
 					</div>
 				</div>
 				<div class="row text-center">
+</body>
+
+</html>

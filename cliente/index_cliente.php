@@ -50,10 +50,10 @@ if(!isset($_SESSION['loginSession']) AND !isset($_SESSION['senhaSession']) ){
 	<?php
     include ("../menu.php");
 		@include("../conexao.php");
-		$limite = 2;
+		$limite = 3;
 		@$pagina = $_GET['pag'];
     @$msg = $_REQUEST['msg'];
-
+    
 		if(!$pagina)
 		{
 		    $pagina = 1;
@@ -108,6 +108,46 @@ if(!isset($_SESSION['loginSession']) AND !isset($_SESSION['senhaSession']) ){
 		 	?>
 		 		<script type="text/javascript">
 		 	  	erro_exclusao_cliente();
+		 		</script>
+		 	<?php
+		 	  }
+		 	?>
+
+      <?php
+		 	  if($msg=='sucesso_email'){
+		 	?>
+		 		<script type="text/javascript">
+		 	  	sucesso_email();
+		 		</script>
+		 	<?php
+		 	  }
+		 	?>
+
+      <?php
+		 	  if($msg=='erro_email'){
+		 	?>
+		 		<script type="text/javascript">
+		 	  	erro_email();
+		 		</script>
+		 	<?php
+		 	  }
+		 	?>
+
+      <?php
+		 	  if($msg=='sucesso_email_cobranca'){
+		 	?>
+		 		<script type="text/javascript">
+		 	  	sucesso_email_cobranca();
+		 		</script>
+		 	<?php
+		 	  }
+		 	?>
+
+      <?php
+		 	  if($msg=='erro_email_cobranca'){
+		 	?>
+		 		<script type="text/javascript">
+		 	  	erro_email_cobranca();
 		 		</script>
 		 	<?php
 		 	  }
@@ -248,10 +288,6 @@ if(!isset($_SESSION['loginSession']) AND !isset($_SESSION['senhaSession']) ){
 							<?php
 								$total_paginas = Ceil($total_registros / $limite);
 
-								// .pagination>.active>a {
-								// 	background-color: #,
-								// 	border-color: #374
-								// }
 								echo '<ul class="pagination">';
 								echo '<li class="previous"><a href="index_cliente.php?pag=1"> Primeira página</a></li>';
 										for($i=1; $i <= $total_paginas; $i++)

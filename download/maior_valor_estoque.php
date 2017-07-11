@@ -4,6 +4,7 @@ $arquivo = 'download.xls';
 $output = '';
 if (isset($_POST["export_excel"])){
   $sql = "SELECT codigo_barra, nome, preco_custo, preco_venda, MAX(preco_custo) FROM produto
+    WHERE vendido = 'n'
     GROUP BY codigo_barra, nome
     ORDER BY preco_custo DESC";
       $result = mysql_query($sql);

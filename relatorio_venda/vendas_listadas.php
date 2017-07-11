@@ -58,7 +58,7 @@
 	<?php
     include ("../menu.php");
 		@include("../conexao.php");
-		$limite = 3;
+		$limite = 10;
 		@$pagina = $_GET['pag'];
     @$msg = $_REQUEST['msg'];
 
@@ -67,25 +67,10 @@
 		    $pagina = 1;
 		}
 
-		$inicio = ($pagina * $limite) - $limite;
+		$inicio = ($pagina * $limite) - $limite + 1;
 
      ?>
 
-	<script type="text/javascript">
-		function confirmExcluir(id) {
-			swal({
-				title : "Excluir",
-				text : "Confirma a exclusão?",
-				type : "error",
-				showCancelButton : false,
-				confirmButtonClass : 'btn-success',
-				confirmButtonText : 'OK!',
-				closeOnConfirm : false
-			}, function() {
-				window.location.href = 'deletrow.php?id=' + id;
-			});
-		}
-	</script>
 
 	<!-- Header -->
 	<header>
@@ -100,14 +85,14 @@
 
 	<section id="clients">
 		<div class="container">
-			<form class="form-inline" action="relatorio_venda5.php" method="post">
+			<form class="form-inline" action="vendas_listadas.php" method="post">
 				<div class="input-group col-md-5 col-md-offset-4">
 					<span class="input-group-addon">
 						<span	class="glyphicon glyphicon-search">	</span>
 					</span>
-					<input type="text" name="buscar" placeholder="Buscar por cliente" class="form-control" />
+					<input type="text" name="buscar" placeholder="Tentarei buscar para você ..." class="form-control" />
 					<span class="input-group-btn">
-						<button type="submit" class="btn btnRight">Buscar</button>
+						<button type="submit" class="btn btnRight">Pesquisar</button>
 					</span>
 					<select class="form-control" name="opcao">
 						<option value="nome">Nome</option>
@@ -134,12 +119,7 @@
 							<table class="table table-bordered">
 								<thead id="titulo">
 									<tr>
-										<th id="opcoes">
-											<center>
-                        Opções
-												<i class="fa fa-cog"></i>
-											</center>
-                    </th>
+
 										<th id="opcoes">
 											<center>Código da venda</center>
 										</th>
@@ -163,52 +143,62 @@
 																@$opcao = $_REQUEST['opcao'];
                                 @$data_inicial = $_REQUEST['data_inicial'];
                                 @$data_final = $_REQUEST['data_final'];
-																	echo $buscar;
-																	echo $opcao;
 
 																	if ($opcao == ''){
-																		$opcao = 'nome';
-																	}
+
+																		$sql = mysql_query("SELECT c.nome, f.descricao, v.codigo, v.data_venda, v.total FROM venda v
+																												INNER JOIN cliente c ON c.codigo = v.id_cliente
+																												INNER JOIN forma_pagamento f ON v.forma_pagamento = f.codigo
+																												WHERE v.data_venda BETWEEN '$data_inicial' AND '$data_final'
+																												ORDER BY v.codigo");
+																		$row = mysql_num_rows($sql);
+																	};
 
 																	if ($opcao == 'nome'){
 																		$sql = mysql_query("SELECT c.nome, f.descricao, v.codigo, v.data_venda, v.total FROM venda v
 																												INNER JOIN cliente c ON c.codigo = v.id_cliente
-																												LEFT JOIN forma_pagamento f ON v.forma_pagamento = f.codigo
-																												WHERE c.nome LIKE '%".$buscar."%' AND v.data_venda BETWEEN $data_inicial AND $data_final
-																												ORDER BY v.codigo LIMIT $inicio, $limite");
-																		$row = mysql_num_rows($sql);
-																	};
-
-																	if ($opcao == 'codigo'){
-																		$sql = mysql_query("SELECT * FROM venda LIMIT 1");
+																												INNER JOIN forma_pagamento f ON v.forma_pagamento = f.codigo
+																												WHERE c.nome LIKE '%".$buscar."%'");
 																		$row = mysql_num_rows($sql);
 																	}
 
-                                  $sql = mysql_query("SELECT c.nome, f.descricao, v.codigo, v.data_venda, v.total FROM venda v
-																	INNER JOIN cliente c ON c.codigo = v.id_cliente
-																	LEFT JOIN forma_pagamento f ON v.forma_pagamento = f.codigo
-                                  WHERE v.data_venda BETWEEN '$data_inicial' AND '$data_final' ORDER BY v.codigo LIMIT $inicio, $limite");
-                                  $row = mysql_num_rows($sql);
-                                if($row == 0){
-                  ?>
+																	if ($opcao == 'sobrenome'){
+																		$sql = mysql_query("SELECT c.nome, f.descricao, v.codigo, v.data_venda, v.total FROM venda v
+																												INNER JOIN cliente c ON c.codigo = v.id_cliente
+																												INNER JOIN forma_pagamento f ON v.forma_pagamento = f.codigo
+																												WHERE c.sobrenome LIKE '%".$buscar."%'
+																												ORDER BY v.codigo");
+																		$row = mysql_num_rows($sql);
+																	}
+
+																	if ($opcao == 'codigo'){
+																		$sql = mysql_query("SELECT c.nome, f.descricao, v.codigo, v.data_venda, v.total FROM venda v
+																												INNER JOIN cliente c ON c.codigo = v.id_cliente
+																												INNER JOIN forma_pagamento f ON v.forma_pagamento = f.codigo
+																												WHERE v.codigo = $buscar
+																												ORDER BY v.codigo");
+																		$row = mysql_num_rows($sql);
+																	}
+
+
+
+            if($row == 0){
+            ?>
 								<div class="white_content" id="div">
 									Nenhuma Busca Encontrada!<br>
 									<img id="imgcerto" src="../images/erro.png" alt=""><br />
 								</div>
 								<div class="black_overlay"></div>
 							</ul>
-								<?php
-                                }
-																$consulta = mysql_query("SELECT codigo FROM venda WHERE data_venda BETWEEN '$data_inicial' AND '$data_final'");
-																$total_registros = mysql_num_rows($consulta);
-                                while($linha = mysql_fetch_array($sql)){
-                            ?>
+					<?php
+          }
+							$consulta = mysql_query("SELECT codigo FROM venda WHERE data_venda BETWEEN '$data_inicial' AND '$data_final'");
+							$total_registros = mysql_num_rows($consulta);
+              while($linha = mysql_fetch_array($sql)){
+          ?>
 								<tbody>
 									<tr>
-										<td>
-											<a href="formAlteraVenda.php?codigo=<?=$linha['codigo']?>"class="btn btn-default"><i class="fa fa-pencil"></i></a>
-											<a	onclick="confirmExcluir($id)" href="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-											</td>
+
 										<td>
 										<a id="link_cliente" href="detalhe_venda.php?codigo=<?=$linha['codigo']?>"><?=$linha['codigo']?></a>
 										</td>
@@ -234,17 +224,16 @@
 										</td>
 									</tr>
 								</tbody>
-								<?php }
-                              mysql_close();
-                            ?>
+								<?php
+										}
+                    mysql_close();
+                ?>
 							</table>
 
 						</div>
 						<div class="panel-footer">
 							<?php
 								$total_paginas = Ceil($total_registros / $limite);
-							echo	$total_paginas;
-							echo $total_registros;
 								echo '<ul class="pagination">';
 								echo '<li class="previous"><a href="vendas_listadas.php?pag=1"> Primeira página</a></li>';
 										for($i=1; $i <= $total_paginas; $i++)

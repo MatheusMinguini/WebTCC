@@ -24,6 +24,22 @@ $query1 = mysql_query("SELECT codigo, descricao, acrescimo FROM forma_pagamento 
 <html lang="en">
 
 <head>
+  <style>
+     .modal {
+              display:    none;
+              position:   fixed;
+              z-index:    1000;
+              top:        0;
+              left:       0;
+              height:     100%;
+              width:      100%;
+              background: rgba( 255, 255, 255, .8 )
+                          url('java.gif')
+                          /*url('http://i.stack.imgur.com/FhHRx.gif')*/
+                          50% 50%
+                          no-repeat;
+      }
+  </style>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -62,8 +78,11 @@ $query1 = mysql_query("SELECT codigo, descricao, acrescimo FROM forma_pagamento 
 
 <body id="page-top" class="index">
 
+  <div class="modal">
+  </div>
+
     <script type="text/javascript">
-      var onload ='setFocusToTextBox()';
+      var onload ='setToTextBox()';
     </script>
 
 
@@ -95,6 +114,7 @@ $query1 = mysql_query("SELECT codigo, descricao, acrescimo FROM forma_pagamento 
                         </div>
                         <div class="panel-body">
                             <div class="row">
+                              <input type="hidden" id="login_usuario" value="<?= $_SESSION['idSession'] ?>" />
                               <div class="form-group col-md-4">
                                   <div class="form-group">
                                     <label for="client_id">Selecione o cliente <span class="obrigatorio">*</span></label>
@@ -141,7 +161,7 @@ $query1 = mysql_query("SELECT codigo, descricao, acrescimo FROM forma_pagamento 
                                     <input class="form-control" id="parcelas" name="parcelas" placeholder="Números de parcelas" />
                                   </div>
                                   <div class="col-md-4">
-                                    <label for="parcelas">Dias entre as parcelas</label>
+                                    <label for="numero_dias">Dias entre as parcelas</label>
                                     <input class="form-control" id="numero_dias" name="numero_dias" placeholder="Números de dias" />
                                   </br>
                                   </div>
@@ -273,6 +293,16 @@ $query1 = mysql_query("SELECT codigo, descricao, acrescimo FROM forma_pagamento 
 
     <script>
 
+    $(document).on({
+      ajaxStart: function () {
+          $(".modal").show();
+      },
+      ajaxStop: function() {
+          $(".modal").hide();
+      }
+    });
+
+    //parcelas
         $("#formaPagamento").change(function(){
             //window.onload = function(){
             $("#codigo_barra").focus();
@@ -318,11 +348,65 @@ $query1 = mysql_query("SELECT codigo, descricao, acrescimo FROM forma_pagamento 
           dadosDoForm.total = $("#total").val();
           dadosDoForm.itensVenda = itensVenda;
 
-          var dadosString = JSON.stringify(dadosDoForm);
+
+          /* CREDIARIO */
+          var now = function now(){
+            var d = new Date();
+            var month = d.getMonth()+1;
+            var day = d.getDate();
+
+            var output =  d.getFullYear() +  "-" + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day
+            return output;
+          };
+
+          var addDays = function addDays(date, days) {
+            var result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return formatDate(result);
+          }
+
+          var formatDate = function formatDate(date) {
+            var d = new Date(date);
+
+            var month = d.getMonth()+1;
+            var day = d.getDate();
+
+            var output =  d.getFullYear() +  "-" + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day
+            return output;
+          }
+
+          var parcelas = parseInt($('#parcelas').val());
+          var dias = parseInt($('#numero_dias').val());
+          var valorParcela = parseFloat(parseFloat($('#total').val()) / parcelas);
+
+
+          var klm = 0;
+          var vencimentoArray = [];
+          var posicao_parcela = [];
+          var date = now();
+          var first_day = dias;
+
+          if (parcelas > 1) {
+
+            for (klm=1; klm <= parcelas; klm++){
+                vencimentoArray.push(addDays(date, dias));
+                posicao_parcela.push(klm);
+              dias =  dias + first_day;
+            };
+
+            dadosDoForm.vencimento = vencimentoArray;
+            dadosDoForm.valorParcela = valorParcela;
+            dadosDoForm.posicao_parcela = posicao_parcela;
+
+          }
+          dadosDoForm.usuario = $("#login_usuario").val();
+          /* FIM CREDIARIO */
+
+        var dadosString = JSON.stringify(dadosDoForm);
           console.log(dadosString);
            $.ajax({
                 type: "POST",
-                url: "http://localhost:8080/maraloja/venda/cadastro_venda.php",
+                url: "http://localhost:80/TCC/venda/cadastro_venda.php",
                 data: {data : dadosString},
                 cache: false,
                 success: function(data){
@@ -348,7 +432,7 @@ $query1 = mysql_query("SELECT codigo, descricao, acrescimo FROM forma_pagamento 
          $('.forma_pagamento').on('change', function(){
            var forma_pagamento_id = $(this).val();
            $.ajax({
-             url: "http://localhost:8080/maraloja/venda/buscaAcrescimo.php?codigo=" + forma_pagamento_id,
+             url: "http://localhost:80/TCC/venda/buscaAcrescimo.php?codigo=" + forma_pagamento_id,
              dataType: "json",
              success : function(data){
                if(data){
@@ -379,7 +463,7 @@ $query1 = mysql_query("SELECT codigo, descricao, acrescimo FROM forma_pagamento 
 
            if (codigoBarra && cliente && forma_pagamento){
              $.ajax({
-               url : "http://localhost:8080/maraloja/venda/buscaProduto.php?codigoBarra=" + codigoBarra,
+               url : "http://localhost:80/TCC/venda/buscaProduto.php?codigoBarra=" + codigoBarra,
                  dataType : "json",
                  success : function(data){
                    if (data) {
@@ -418,24 +502,23 @@ $query1 = mysql_query("SELECT codigo, descricao, acrescimo FROM forma_pagamento 
          var novo_total = 0;
          var total_desconto = 0;
          $('#button_plus').on('click', function() {
-                       acrescimo = $('.acrescimo').val();
-                       total_atual = $('#total').val();
-                       novo_total = parseFloat(total_atual) +  parseFloat(acrescimo);
-                       $('#total').val(parseFloat(novo_total));
-                       bootbox.alert("O acréscimo foi adicionado ao total da compra'");
-                       $('.desconto').on('change', function() {
-                         desconto = $(this).val();
-                         if (desconto == 0) {
-                           total_antigo = parseFloat(total_inicio) + parseFloat(acrescimo);
-                           $('#total').val(total_antigo);
-                          } else {
-                           total_venda = parseFloat(total_inicio);
-                           total_desconto = parseFloat(total_venda) + parseFloat(acrescimo) -  parseFloat(desconto);
-                           $('#total').val(total_desconto);
-                         }
+           acrescimo = $('.acrescimo').val();
+           total_atual = $('#total').val();
+           novo_total = parseFloat(total_atual) +  parseFloat(acrescimo);
+           $('#total').val(parseFloat(novo_total));
+           bootbox.alert("O acréscimo foi adicionado ao total da compra'");
+           $('.desconto').on('change', function() {
+             desconto = $(this).val();
+             if (desconto == 0) {
+               total_antigo = parseFloat(total_inicio) + parseFloat(acrescimo);
+               $('#total').val(total_antigo);
+              } else {
+               total_venda = parseFloat(total_inicio);
+               total_desconto = parseFloat(total_venda) + parseFloat(acrescimo) -  parseFloat(desconto);
+               $('#total').val(total_desconto);
+             }
 
-                       });
-
+           });
          });
 
 

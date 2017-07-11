@@ -87,17 +87,6 @@
 									</div>
 
 									<div class="col-md-4">
-										<label>Número de parcelas <span class="obrigatorio">*</span></label>
-                    <input type="number" name="numero_parcelas" class="form-control" placeholder="Número parcelas">
-									</div>
-
-                  <div class="col-md-4">
-										<label>Número de dias entre as parcelas <span class="obrigatorio">*</span></label>
-                    <input type="number" name="numero_dias"class="form-control" placeholder="Número de dias">
-									  </br>
-									</div>
-
-									<div class="col-md-4">
 										<label>Acréscimo na compra <span class="obrigatorio">*</span></label>
                     <input type="number" step= "any" name="acrescimo" class="form-control" placeholder="Acréscimo">
 									</div>

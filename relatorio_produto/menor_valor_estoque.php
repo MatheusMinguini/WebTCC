@@ -93,14 +93,11 @@
 										</thead>
 
 										<?php
-											$data_inicial = $_POST['data_inicial'];
-											$data_final = $_POST['data_final'];
                                 @include("../conexao.php");
                                 @$buscar = $_REQUEST['buscar'];
                                 $sql = mysql_query(
 																"SELECT codigo_barra, nome, preco_custo, preco_venda, MIN(preco_custo) FROM produto
-																	WHERE data_entrada between '$data_inicial' and '$data_final'
-																	AND vendido = 'n'
+																	WHERE vendido = 'n'
 																	GROUP BY codigo_barra, nome
 																	ORDER BY MIN(preco_custo); "
 																);
@@ -137,6 +134,14 @@
                       mysql_close();
                     ?>
 									</table>
+
+									<div class="row">
+										<div clas="col-md-4">
+											<form name="excel.php" action="../download/menor_valor_estoque.php" method="post">
+												<input type="submit" name="export_excel" class="btn btn-success" value="Exportar para o Excel">
+											</form>
+										</div>
+									</div>
 
 								</div>
 							</div>

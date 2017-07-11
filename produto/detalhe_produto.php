@@ -22,14 +22,21 @@ $query4 = "SELECT f.nome FROM  fornecedor f
 INNER JOIN produto p ON f.codigo = p.fornecedor
 WHERE p.codigo =".$id;
 
+
+$query5 = "SELECT m.modelo FROM  modelo m
+INNER JOIN produto p ON m.codigo = p.modelo
+WHERE p.codigo =".$id;
+
 $dados = mysql_query($query);
 $dados2 = mysql_query($query2);
 $dados3 = mysql_query($query3);
 $dados4 = mysql_query($query4);
+$dados5 = mysql_query($query5);
 $resultado = mysql_fetch_object($dados);
 $resultado2 = mysql_fetch_object($dados2);
 $resultado3 = mysql_fetch_object($dados3);
 $resultado4 = mysql_fetch_object($dados4);
+$resultado5 = mysql_fetch_object($dados5);
 
 
 $codigo_barra = $resultado->codigo_barra;
@@ -40,6 +47,7 @@ $preco_venda = $resultado->preco_venda;
 @$grupo = $resultado2->nome;
 @$marca  = $resultado3->marca;
 @$fornecedor = $resultado4->nome;
+@$modelo = $resultado5->modelo;
 $quantidade = $resultado->quantidade;
 $data_entrada = $resultado->data_entrada;
 $tamanho = $resultado->tamanho;
@@ -176,6 +184,18 @@ $descricao = $resultado->descricao;
 								</h5>
 								<br>
 							</div>
+
+							<?php
+									if ($modelo == ''){
+									$modelo = "Nenhum modelo vinculado!";
+									}
+							?>
+														<div class="col-md-4">
+															<h5>
+																<b>Modelo: </b><span id="dados_cliente"><center> <?=$modelo?></center></span>
+															</h5>
+															<br>
+														</div>
 
 
 <?php

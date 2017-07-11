@@ -860,3 +860,21 @@ body {
  .obrigatorio{
      color: red;
  }
+
+ #ptqp{
+     background-image:   url(../img/money.jpg);
+     width: 60px;
+     padding-top: 45px;
+ }
+
+ #total_parcelas_vencidas{
+   color: red;
+ }
+
+ #total_parcelas_nao_vencidas{
+   color: #228B22;
+ }
+
+ #total_parcelas_geral{
+   color: #4682B4;
+ }

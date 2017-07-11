@@ -7,8 +7,9 @@
 include '../conexao.php';
 $id = $_REQUEST['codigo'];
 
-$query = "SELECT c.nome, f.descricao, v.codigo, v.data_venda, v.total  FROM venda v
+$query = "SELECT u.login as usuario, c.nome, f.descricao, v.codigo, v.data_venda, v.total  FROM venda v
 INNER JOIN cliente c ON c.codigo = v.id_cliente
+INNER JOIN usuario u ON u.codigo = v.id_usuario
 LEFT JOIN forma_pagamento f ON v.forma_pagamento = f.codigo WHERE v.codigo=".$id;
 $query1 = "SELECT p.nome, p.preco_venda,v.codigo FROM produto p
 INNER JOIN itens_venda i ON p.codigo = i.id_produto
@@ -25,6 +26,7 @@ $cliente = $resultado->nome;
 $forma_pagamento = $resultado->descricao;
 $data_venda = $resultado->data_venda;
 $total = $resultado->total;
+$usuario = $resultado->usuario;
 
 $produto = $resultado1->nome;
 $preco_venda= $resultado1->preco_venda;
@@ -138,6 +140,12 @@ $preco_venda= $resultado1->preco_venda;
                 <div class="col-md-4">
 									<h5>
 										<b>Data da venda: </b><span id="dados_cliente"> <?=$data_venda?></span>
+									</h5>
+								</div>
+
+								<div class="col-md-4">
+									<h5>
+										<b>Usuário que cadastrou:</b><span id="dados_cliente"> <?=$usuario?></span>
 									</h5>
 								</div>
 							</div>

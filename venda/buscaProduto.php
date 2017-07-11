@@ -8,7 +8,7 @@
   // 2) Query database for data
   //-------------------------------------------------------------------------
 
-  $result = mysql_query("SELECT codigo, codigo_barra, nome, preco_venda FROM produto WHERE codigo_barra='".$codigoBarra."'");          //query
+  $result = mysql_query("SELECT codigo, codigo_barra, nome, preco_venda FROM produto WHERE vendido = 'n' AND codigo_barra='".$codigoBarra."'");          //query
   $array = mysql_fetch_row($result);                          //fetch result
   //--------------------------------------------------------------------------
   // 3) echo result as json
